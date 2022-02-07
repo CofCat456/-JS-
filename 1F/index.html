@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CofCat - 1F - 9x9 乘法表</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="1F.css" />
+    </head>
+    <body>
+        <!-- 引入Vue -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
+
+        <div id="app" class="container">
+            <div class="wrap">
+                <div class="card-decorate">
+                    <div class="area">
+                        <div class="x">x</div>
+                        <div class="line"></div>
+                        <div class="x">x</div>
+                    </div>
+                    <div class="text">
+                        <h1>九九乘法表</h1>
+                        <p>MULTIPLICATION CHART</p>
+                    </div>
+                    <div class="area">
+                        <div class="x">x</div>
+                        <div class="line"></div>
+                        <div class="x">x</div>
+                    </div>
+                </div>
+                <card v-for="count in 8" :i="++count" :key="++count"></card>
+
+                <!-- 測試用 -->
+                <!-- <div class="card">
+                    <div class="box">
+                        <h1>6</h1>
+                        <p >6 × 1 ＝ 6</p>
+                        <p >6 × 2 ＝ 12</p>
+                        <p >6 × 3 ＝ 18</p>
+                        <p >6 × 4 ＝ 24</p>
+                        <p >6 × 7 ＝ 42</p>
+                        <p >6 × 7 ＝ 42</p>
+                        <p >6 × 7 ＝ 42</p>
+                        <p >6 × 7 ＝ 42</p>
+                        <p >6 × 7 ＝ 42</p>
+                    </div>
+                </div> -->
+            </div>
+            <footer>
+                <p>Copyright © 2019 HexSchool. All rights reserved.</p>
+            </footer>
+        </div>
+
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {};
+                },
+            });
+
+            app.component('card', {
+                props: ['i'],
+                template: `<div class="card">
+                    <div class="box">
+                        <h1>{{ i }}</h1>
+                        <p v-for='j in 9'>{{ i }} × {{ j }} ＝ {{ i*j }}</p>
+                    </div>
+                </div>`,
+            });
+
+            app.mount('#app');
+        </script>
+    </body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CofCat - 2F - 時鐘</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="2F.css" />
+    </head>
+    <body>
+        <!-- 引入Vue -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
+
+        <div id="app" class="container">
+            <div class="clock-bg">
+                <clock-text v-for="x in 12" :key="x" :x="x"></clock-text>
+                <clock-stext v-for="y in 12" :key="y" :y="y"></clock-stext>
+                <clock-point v-for="z in 72" :key="z" :z="z"></clock-point>
+                <div
+                    class="hand hour-hand"
+                    :style="{ 'transform': `rotate(${hourDeg}deg)`}"
+                ></div>
+                <div
+                    class="hand min-hand"
+                    :style="{ 'transform': `rotate(${minDeg}deg)`}"
+                ></div>
+                <div
+                    class="hand second-hand"
+                    :style="{ 'transform': `rotate(${secondDeg}deg)`}"
+                >
+                    <div class="second-bottom"></div>
+                    <div class="second-middle"></div>
+                    <div class="second-top"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        secondDeg: 0,
+                        minDeg: 0,
+                        hourDeg: 0,
+                    };
+                },
+                methods: {
+                    setTime() {
+                        let data = new Date(); // 抓取時間
+                        let second = data.getSeconds();
+                        let min = data.getMinutes();
+                        let hour = data.getHours();
+                        console.log(`現在時間為${hour}點${min}分${second}秒`);
+
+                        this.setClock(second, min, hour);
+                    },
+                    setClock(second, min, hour) {
+                        this.secondDeg = second * 6; // 360度 / 60秒
+                        this.minDeg = min * 6 + (second * 6) / 60; // 360度 / 60秒
+                        this.hourDeg = hour * 30 + (min * 30) / 60; // 360度 / 12小時
+                        console.log('秒針角度', this.secondDeg);
+                        console.log('分針角度', this.minDeg);
+                        console.log('時針角度', this.hourDeg);
+
+                        console.log(second);
+                    },
+                },
+                mounted() {
+                    this.setTime();
+                    setInterval(this.setTime, 1000);
+                },
+            });
+
+            app.component('clock-text', {
+                data() {
+                    return {
+                        textCss: {
+                            rotate: '',
+                            content: '',
+                            textRotate: '',
+                        },
+                    };
+                },
+                props: ['x'],
+                template: `<div class="clock-text" :style="{ 'transform': rotate,
+                '--textRotate': textRotate }" :data-text='text'></div>`,
+                created() {
+                    this.rotate = `rotate(${this.x * 30}deg)`;
+                    this.text = this.x + 12 + '';
+                    this.textRotate = `rotate(${this.x * -30}deg)`;
+                },
+            });
+
+            app.component('clock-stext', {
+                data() {
+                    return {
+                        textCss: {
+                            rotate: '',
+                            stextRotate: '',
+                        },
+                    };
+                },
+                props: ['y'],
+                template: `<div class="clock-stext" :style="{ 'transform': rotate,
+                '--stextRotate': stextRotate }" :data-stext='y'></div>`,
+                created() {
+                    this.rotate = `rotate(${this.y * 30}deg)`;
+                    this.stextRotate = `rotate(${this.y * -30}deg)`;
+                },
+            });
+
+            app.component('clock-point', {
+                data() {
+                    return {
+                        textCss: {
+                            pointRotate: '',
+                            startRotate: '',
+                        },
+                    };
+                },
+                props: ['z'],
+                template: `<div v-if='(z % 3 !== 0)' class="clock-point" :style="{ 'transform': pointRotate }"></div>
+                <div v-else-if='(z % 6 !== 0)' class='star' :style="{ 'transform': pointRotate }">
+                    <div class='star-top'></div>
+                    <div class='star-bottom'></div>
+                </div>`,
+                created() {
+                    this.pointRotate = `rotate(${this.z * 5}deg)`;
+                    if (this.z === 1) {
+                        this.startRotate = `rotate(${this.z * 15}deg)`;
+                    } else {
+                        this.startRotate = `rotate(${this.z * 30}deg)`;
+                    }
+                    console.log(this.pointRotate);
+                },
+            });
+
+            app.mount('#app');
+        </script>
+    </body>
+</html>
