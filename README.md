@@ -1,8 +1,8 @@
 # **新手 JS 地下城**
 
 Demo： 
-* [1F - 9x9 乘法表](https://cofcat456.github.io/HexSchool_webLayoutTraining1st/Task-1)
-* [2F - 時鐘](https://cofcat456.github.io/HexSchool_webLayoutTraining1st/Task-2)
+* [1F - 9x9 乘法表](https://cofcat456.github.io/JS-Dungeons/1F)
+* [2F - 時鐘](https://cofcat456.github.io/JS-Dungeons/2F)
 
 ## **資源**
 * [1F - 9x9 乘法表 設計稿](https://xd.adobe.com/spec/256981fc-ef65-4d9b-773c-45d8ef0353c6-5358/screen/50fba855-bde7-4771-b73c-3fd839418cf0/)
